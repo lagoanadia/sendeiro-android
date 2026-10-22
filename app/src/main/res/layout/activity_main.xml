@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sendeiro · la pantalla de la actividad 1: dos campos y un texto, uno debajo de otro.
+     Un LinearLayout vertical es lo más simple que funciona; los layouts de verdad son del tema 3.
+     fitsSystemWindows: que el contenido no se meta debajo de la barra de estado en los Android nuevos. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <!-- android:id es el nombre con el que el código encuentra esta vista (findViewById)…
+         y lo que permite a Android guardar solo lo que se haya escrito en ella. -->
+    <EditText
+        android:id="@+id/campoNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:hint="Nombre de la ruta"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/campoDistancia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:hint="Distancia en km"
+        android:inputType="numberDecimal" />
+
+    <!-- Sin texto aquí: se lo pone MainActivity en cada onCreate. -->
+    <TextView
+        android:id="@+id/textoCreaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:textSize="18sp" />
+
+</LinearLayout>
