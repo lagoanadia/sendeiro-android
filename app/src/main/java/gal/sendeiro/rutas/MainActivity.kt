@@ -12,14 +12,18 @@ import androidx.appcompat.app.AppCompatActivity
 /**
  * Sendeiro · pantalla principal (PMDM-UD2, actividad 1).
  *
- * Trazas: ventana Logcat de Android Studio, con el filtro  tag:CICLO
- *         o en una terminal:  adb logcat -c && adb logcat -s CICLO:D
+ * Compilar:  ./gradlew.bat assembleDebug   (en Linux o Mac: ./gradlew)
+ * Instalar:  ./gradlew.bat installDebug    (instala en todo lo que salga en adb devices)
+ * Hay que tener antes:
+ *  - JDK 17 y el SDK de Android (variable ANDROID_HOME, o sdk.dir en local.properties,
+ *    que no se versiona).
+ *  - Un emulador arrancado (minimo, API 24, u objetivo, API 37) o un móvil con
+ *    depuración USB. Comprobarlo con adb devices: tiene que salir como "device".
+ * Trazas:    adb logcat -c && adb logcat -s CICLO:D
  *
- * Qué enseña: las siete llamadas del ciclo de vida de una pantalla, y qué sobrevive y qué no
- * cuando el sistema la destruye y la vuelve a crear (al girar el móvil, por ejemplo).
- *  - Lo escrito en los dos campos SOBREVIVE solo: Android guarda el estado de las vistas con id.
- *  - El contador «creaciones» NO: es una variable de este objeto, y el objeto nuevo nace a cero.
- *    Hacer que sobreviva es la parte de «tocar» de la actividad.
+ * Qué enseña: las siete llamadas del ciclo de vida y qué sobrevive y qué no cuando
+ * el sistema destruye la pantalla (al girar, por ejemplo). El contador «creaciones»
+ * sobrevive guardándolo en el Bundle de onSaveInstanceState.
  */
 class MainActivity : AppCompatActivity() {
 
@@ -40,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         campoDistancia = findViewById(R.id.campoDistancia)
         textoCreaciones = findViewById(R.id.textoCreaciones)
 
-        creaciones = creaciones + 1                 // TOCAR: hoy siempre da 1. ¿Por qué?
+        creaciones = (savedInstanceState?.getInt("creaciones") ?: 0) + 1          // TOCAR: hoy siempre da 1. ¿Por qué?
         textoCreaciones.text = "Esta pantalla se ha creado $creaciones veces"
     }
 
@@ -51,10 +55,11 @@ class MainActivity : AppCompatActivity() {
     override fun onRestart() { super.onRestart(); Log.d(TAG, "onRestart") }   // vuelve sin destruirse
     override fun onDestroy() { super.onDestroy(); Log.d(TAG, "onDestroy") }   // este objeto se acaba
 
-    /** La llama el sistema ANTES de destruir la pantalla, por si luego hay que reconstruirla. */
+      /** La llama el sistema ANTES de destruir la pantalla, por si luego hay que reconstruirla. */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)         // guarda sola lo escrito en las vistas con id
         Log.d(TAG, "onSaveInstanceState")
-        // TOCAR: guardar aquí el contador, y recuperarlo en onCreate.
+        outState.putInt("creaciones", creaciones)   // guarda el contador en el Bundle
     }
 }
+
