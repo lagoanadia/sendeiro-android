@@ -19,4 +19,6 @@ interface RutaDao {
 
     @Query("DELETE FROM Ruta")
     suspend fun borrarTodas()
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertar(ruta: Ruta)
 }

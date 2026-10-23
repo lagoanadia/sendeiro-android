@@ -13,6 +13,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
+import android.content.Intent
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 /**
  * Sendeiro · pantalla principal (PMDM-UD2, actividades 1 y 2).
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textoCreaciones: TextView
     private var creaciones = 0
     private val prefs by lazy { getSharedPreferences("borrador", MODE_PRIVATE) }
+        private val dao by lazy { BaseDatos.obtener(this).rutaDao() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +71,10 @@ class MainActivity : AppCompatActivity() {
             ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line,
                 resources.getStringArray(R.array.tramos))
         )
-
+                  // Intent explícito: de aquí vamos a la pantalla del listado
+        findViewById<Button>(R.id.botonVerRutas).setOnClickListener {
+            startActivity(Intent(this, ListadoActivity::class.java))
+        }
         // Momento 1 · al escribir: pista suave y botón al día
         campoNombre.doAfterTextChanged { actualizarBoton() }
         campoDistancia.doAfterTextChanged { pistaDistancia(); actualizarBoton() }
@@ -164,9 +171,29 @@ class MainActivity : AppCompatActivity() {
         botonGuardar.isEnabled = todoOk()
     }
 
-    private fun guardar() {
-        prefs.edit().clear().apply()   // ya no hace falta el borrador
+       private fun guardar() {
+        val ruta = Ruta(
+            id = System.currentTimeMillis(),
+            nombre = campoNombre.text.toString().trim(),
+            km = distanciaValor() ?: 0.0,
+            cerrada = false
+        )
+        lifecycleScope.launch { dao.insertar(ruta) }   // suspend: fuera del hilo principal
+        prefs.edit().clear().apply()                   // ya no hace falta el borrador
+        limpiarFormulario()
         Toast.makeText(this, R.string.ruta_guardada, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun limpiarFormulario() {
+        campoNombre.setText("")
+        campoDistancia.setText("")
+        grupoDificultad.clearCheck()
+        checkCircular.isChecked = false
+        campoTramo.setText("", false)
+        campoDescripcion.setText("")
+        campoNombre.error = null
+        campoDistancia.error = null
+        campoTramo.error = null
     }
 
     // ---- borrador: solo se guarda lo que es válido ----
