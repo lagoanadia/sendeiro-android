@@ -5,6 +5,8 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 
 
 
@@ -43,9 +45,11 @@ class MainActivity : AppCompatActivity() {
         campoNombre = findViewById(R.id.campoNombre)        // la vista del layout con ese id
         campoDistancia = findViewById(R.id.campoDistancia)
         textoCreaciones = findViewById(R.id.textoCreaciones)
+        val campoTramo: AutoCompleteTextView = findViewById(R.id.campoTramo)
+        campoTramo.setAdapter(ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, resources.getStringArray(R.array.tramos)))
 
         creaciones = (savedInstanceState?.getInt("creaciones") ?: 0) + 1          // TOCAR: hoy siempre da 1. ¿Por qué?
-        textoCreaciones.text = "Esta pantalla se ha creado $creaciones veces"
+       textoCreaciones.text = getString(R.string.creaciones, creaciones)
     }
 
     override fun onStart()   { super.onStart();   Log.d(TAG, "onStart") }     // ya se ve

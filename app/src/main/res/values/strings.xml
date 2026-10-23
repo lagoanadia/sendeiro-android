@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Sendeiro</string>
+    <string name="alta_titulo">Alta de ruta</string>
+    <string name="hint_nombre">Nombre de la ruta</string>
+    <string name="hint_distancia">Distancia en km</string>
+    <string name="boton_guardar">Guardar</string>
+    <string name="creaciones">Esta pantalla se ha creado %1$d veces</string>
+    <string name="label_dificultad">Dificultad</string>
+    <string name="dificultad_facil">Fácil</string>
+    <string name="dificultad_media">Media</string>
+    <string name="dificultad_alta">Alta</string>
+    <string name="label_circular">¿Circular?</string>
+    <string name="hint_tramo">Tramo (escribe para buscar)</string>
+    <string name="hint_descripcion">Descripción</string>
+    <string-array name="tramos">
+        <item>Tramo 001</item>
+        <item>Tramo 002</item>
+        <item>Tramo 003</item>
+        <item>Tramo 004</item>
+        <item>Tramo 005</item>
+        <item>Tramo 006</item>
+    </string-array>
 </resources>
