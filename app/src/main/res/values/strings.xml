@@ -27,4 +27,7 @@
 <string name="error_tramo">Elige un tramo de la lista</string>
 <string name="pista_numero">Escribe solo números</string>
 <string name="ruta_guardada">Ruta guardada</string>
+<string name="etiqueta_cerrada">Cerrada</string>
+<string name="km_formato">%1$.1f km</string>
+<string name="borrar_ruta">Borrar ruta</string>
 </resources>
