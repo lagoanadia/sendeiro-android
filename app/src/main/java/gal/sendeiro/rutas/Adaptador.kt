@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.app.AlertDialog
 
-class Adaptador(private val rutas: List<Ruta>) : RecyclerView.Adapter<Adaptador.Fila>() {
+class Adaptador(private val rutas: MutableList<Ruta>) : RecyclerView.Adapter<Adaptador.Fila>() {
 
     private var llamadasCreate = 0
     private var llamadasBind = 0
@@ -37,5 +38,19 @@ class Adaptador(private val rutas: List<Ruta>) : RecyclerView.Adapter<Adaptador.
         f.km.text = f.itemView.context.getString(R.string.km_formato, r.km)
         if (r.cerrada) f.etiqueta.visibility = View.VISIBLE
         else f.etiqueta.visibility = View.GONE
+                f.botonBorrar.setOnClickListener {
+            val ruta = rutas[f.bindingAdapterPosition]
+            AlertDialog.Builder(f.itemView.context)
+                .setMessage(f.itemView.context.getString(R.string.confirmar_borrado, ruta.nombre))
+                .setPositiveButton(R.string.borrar) { _, _ ->
+                    val i = rutas.indexOf(ruta)
+                    if (i >= 0) {
+                        rutas.removeAt(i)
+                        notifyItemRemoved(i)
+                    }
+                }
+                .setNegativeButton(R.string.cancelar, null)
+                .show()
+        }
     }
 }

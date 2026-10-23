@@ -30,4 +30,12 @@
 <string name="etiqueta_cerrada">Cerrada</string>
 <string name="km_formato">%1$.1f km</string>
 <string name="borrar_ruta">Borrar ruta</string>
+<string name="cargando_mensaje">Cargando rutas…</string>
+<string name="vacio_mensaje">Todavía no has descargado ninguna ruta. Descárgalas aquí para verlas en tu lista.</string>
+<string name="boton_descargar">Descargar rutas</string>
+<string name="error_mensaje">No se han podido cargar las rutas. Comprueba la conexión e inténtalo de nuevo.</string>
+<string name="boton_reintentar">Reintentar</string>
+<string name="confirmar_borrado">¿Borrar «%1$s»?</string>
+<string name="borrar">Borrar</string>
+<string name="cancelar">Cancelar</string>
 </resources>
