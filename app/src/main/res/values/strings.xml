@@ -38,4 +38,17 @@
 <string name="confirmar_borrado">¿Borrar «%1$s»?</string>
 <string name="borrar">Borrar</string>
 <string name="cancelar">Cancelar</string>
+<string name="mostrar_millas">Mostrar distancias en millas</string>
+<string name="mi_formato">%1$.1f mi</string>
+<string name="boton_compartir">Compartir parte</string>
+<string name="compartir_titulo">Compartir parte con…</string>
+<string name="parte_texto">Parte de la ruta «%1$s» (%2$.1f km)</string>
+<string name="parte_compartido">Parte enviado a compartir</string>
+<string name="sin_app_compartir">No hay ninguna app para compartir el parte</string>
+<string name="boton_posicion">Ver mi posición</string>
+<string name="posicion_concedida">Permiso concedido: aquí se usaría tu posición.</string>
+<string name="permiso_explicacion">La posición sirve para situarte respecto a la ruta. Sin ella la app sigue funcionando.</string>
+<string name="permiso_reintentar">Reintentar</string>
+<string name="permiso_denegado_siempre">Has denegado el permiso para siempre. Puedes activarlo en los ajustes de la app.</string>
+<string name="boton_ajustes">Ajustes</string>
 </resources>

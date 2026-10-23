@@ -24,6 +24,11 @@
         <activity
         android:name=".ListadoActivity"
         android:exported="true" />
+        <activity
+    android:name=".DetalleActivity"
+    android:exported="false" />
     </application>
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
 
 </manifest>

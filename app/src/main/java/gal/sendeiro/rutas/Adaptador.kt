@@ -9,7 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.app.AlertDialog
 
-class Adaptador(private val rutas: MutableList<Ruta>) : RecyclerView.Adapter<Adaptador.Fila>() {
+class Adaptador(
+    private val rutas: MutableList<Ruta>,
+    var millas: Boolean = false,
+    private val alBorrar: (Ruta) -> Unit = {},
+    private val alPulsar: (Ruta) -> Unit = {}
+) : RecyclerView.Adapter<Adaptador.Fila>() {
 
     private var llamadasCreate = 0
     private var llamadasBind = 0
@@ -30,12 +35,15 @@ class Adaptador(private val rutas: MutableList<Ruta>) : RecyclerView.Adapter<Ada
         return Fila(v)
     }
 
-    override fun onBindViewHolder(f: Fila, posicion: Int) {
+    override fun onBindViewHolder(f: Fila, posicion: Int) 
+    {
         llamadasBind++
         Log.d("RECICLADO", "onBindViewHolder · posición $posicion · llamadas: $llamadasBind")
         val r = rutas[posicion]
         f.nombre.text = r.nombre
-        f.km.text = f.itemView.context.getString(R.string.km_formato, r.km)
+                val valor = if (millas) r.km * 0.621371 else r.km
+        val formato = if (millas) R.string.mi_formato else R.string.km_formato
+        f.km.text = f.itemView.context.getString(formato, valor)
         if (r.cerrada) f.etiqueta.visibility = View.VISIBLE
         else f.etiqueta.visibility = View.GONE
                 f.botonBorrar.setOnClickListener {
@@ -44,13 +52,14 @@ class Adaptador(private val rutas: MutableList<Ruta>) : RecyclerView.Adapter<Ada
                 .setMessage(f.itemView.context.getString(R.string.confirmar_borrado, ruta.nombre))
                 .setPositiveButton(R.string.borrar) { _, _ ->
                     val i = rutas.indexOf(ruta)
-                    if (i >= 0) {
-                        rutas.removeAt(i)
-                        notifyItemRemoved(i)
-                    }
+                  if (i >= 0) { rutas.removeAt(i); notifyItemRemoved(i); alBorrar(ruta) }
                 }
                 .setNegativeButton(R.string.cancelar, null)
                 .show()
+        }
+                f.itemView.setOnClickListener {
+            val pos = f.bindingAdapterPosition
+            if (pos != RecyclerView.NO_POSITION) alPulsar(rutas[pos])
         }
     }
 }

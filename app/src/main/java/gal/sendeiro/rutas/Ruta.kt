@@ -1,6 +1,15 @@
 package gal.sendeiro.rutas
 
-data class Ruta(val id: Long, val nombre: String, val km: Double, val cerrada: Boolean)
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class Ruta(
+    @PrimaryKey val id: Long,
+    val nombre: String,
+    val km: Double,
+    val cerrada: Boolean
+)
 
 // Treinta rutas de prueba; una de cada cuatro está cerrada
 fun rutasDePrueba(): List<Ruta> = List(30) { i ->
