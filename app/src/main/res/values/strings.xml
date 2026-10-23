@@ -20,4 +20,11 @@
         <item>Tramo 005</item>
         <item>Tramo 006</item>
     </string-array>
+    <string name="error_nombre">El nombre debe tener al menos 3 caracteres</string>
+<string name="error_distancia_vacia">La distancia es obligatoria</string>
+<string name="error_distancia_invalida">Debe ser un número mayor que 0 y como máximo 500</string>
+<string name="error_dificultad">Elige una dificultad</string>
+<string name="error_tramo">Elige un tramo de la lista</string>
+<string name="pista_numero">Escribe solo números</string>
+<string name="ruta_guardada">Ruta guardada</string>
 </resources>
